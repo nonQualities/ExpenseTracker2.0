@@ -1,5 +1,6 @@
 package org.exptrkr;
 
+import java.text.ParseException;
 import java.util.Date;
 
 public class Expense {
@@ -23,12 +24,12 @@ public class Expense {
         ExpRemark = expRemark;
     }
 
-    public Date getExpDate(Date date) {
+    public Date getExpDate() {
         return ExpDate;
     }
 
-    public void setExpDate(Date expDate) {
-        ExpDate = expDate;
+    public void setExpDate(String expDate) throws ParseException {
+        this.ExpDate = UtilDate.StringToDate(expDate,"dd-MM-yyyy");
     }
 
     public String getCatName() {
@@ -71,7 +72,5 @@ public class Expense {
         ExpID = expID;
     }
 
-    public java.sql.Date getDate() {
-        return (java.sql.Date) ExpDate;
-    }
+
 }

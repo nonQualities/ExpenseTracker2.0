@@ -63,7 +63,7 @@ public class Repository {
             pstmt.setDouble(3, expense.getExpAmount());
             pstmt.setString(4, expense.getExpName());
             pstmt.setString(5, expense.getExpRemark());
-            pstmt.setDate(6, expense.getDate());
+            pstmt.setString(6, UtilDate.DateToString(expense.getExpDate(), "dd-MM-yyyy"));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,11 +99,13 @@ public class Repository {
                 expense.setCatID(rs.getLong("categoryID"));
                 expense.setCatName(rs.getString("categoryName"));
                 expense.setExpRemark(rs.getString("remark"));
-                expense.getExpDate(rs.getDate("date"));
+                expense.setExpDate(rs.getString(UtilDate.DateToString(expense.getExpDate(), "dd-MM-yyyy")));
                 expenses.add(expense);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return expenses;
     }
@@ -128,11 +130,13 @@ public class Repository {
                 expense.setExpName(rs.getString("name"));
                 expense.setExpAmount(rs.getFloat("amount"));
                 expense.setExpRemark(rs.getString("remark"));
-                expense.setExpDate(UtilDate.StringToDate(rs.getString("date"), "yyyy-MM-dd"));
+                expense.setExpDate(rs.getString("date"));
                 expenses.add(expense);
             }
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return expenses;
     }
@@ -152,7 +156,7 @@ public class Repository {
                 expense.setExpName(rs.getString("name"));
                 expense.setExpAmount(rs.getFloat("amount"));
                 expense.setExpRemark(rs.getString("remark"));
-                expense.setExpDate(UtilDate.StringToDate(rs.getString("date"), "yyyy-MM-dd"));
+                expense.setExpDate(rs.getString("date"));
                 expenses.add(expense);
             }
         } catch (SQLException | ParseException e) {
