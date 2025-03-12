@@ -81,20 +81,19 @@ public class ServiceRun {
         System.out.println("Yearly Report");
         for (Expense exp : expList) {
             System.out.println("Expense ID: " + exp.getExpID() + " Expense Name: " + exp.getExpName() + " Expense " +
-                    "Amount: " + exp.getExpAmount() + " Expense Date: " + exp.getExpDate(year1));}
+                    "Amount: " + exp.getExpAmount() + " Expense Date: " + exp.getExpDate());}
     }
 
-    private void showMonthlyRep() throws ParseException {
+    private void showMonthlyRep() {
         System.out.println("Enter Month: ");
-        String month = scan.next();
-        Date month1 = UtilDate.StringToDate(month,"MM");
+        int month = scan.nextInt();
         System.out.println("Enter Year: ");
         int year = scan.nextInt();
-        List<Expense> expList = repo.getMonthlyReport(Integer.parseInt(month), year);
+        List<Expense> expList = repo.getMonthlyReport(month, year);
         System.out.println("Monthly Report");
         for (Expense exp : expList) {
-            System.out.println("Expense ID: " + exp.getExpID() + " Expense Name: " + exp.getExpName() + " Expense Amount: " + exp.getExpAmount() + " Expense Date: " +
-                    exp.getExpDate(month1) + " Expense Remark: " + exp.getExpRemark());
+            System.out.println("Expense ID: " + exp.getExpID() + " Expense Name: " + exp.getExpName() + " Expense Amount: " + exp.getExpAmount() +
+                    " Expense Date: " + exp.getExpDate() + " Expense Remark: " + exp.getExpRemark());
         }
     }
 
@@ -124,7 +123,9 @@ public class ServiceRun {
         System.out.println("Enter Category Name: ");
         exp.setCatName(scan.next());
         System.out.println("Enter Expense Date: ");
-        exp.setExpDate(UtilDate.StringToDate(scan.next(),"dd/MM/yyyy"));
+        String Date=scan.next();
+        //Date date = UtilDate.StringToDate(Date,"dd-MM-yyyy");
+        exp.setExpDate(Date);
         System.out.println("Enter Expense Remark: ");
         exp.setExpRemark(scan.next());
         exp.setExpID(System.currentTimeMillis());
